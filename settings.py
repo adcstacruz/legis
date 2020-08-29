@@ -28,3 +28,43 @@ TABLE_KEYWORDS_MAP = {
 } 
 
 
+
+# bills settings 
+AUTHOR_KEYS = ['Principal Author/s']
+SHORT_TITLE_KEYS = ['Short Title']
+BID_PATTERN = '^H[a-zA-Z]*\d+\d$'
+
+
+############ TODO LIST ###########
+
+'''
+# TODO: 
+
+
+PEOPLE:
+* ADD - 1) sex; 2) region; 3) island group; 4) reading
+* READING -  
+
+* Social welfare categories?
+
+* BILL - BILL OR RESOLUTION:
+* Significance - 
+* Nature - social welfare, infrostructure 
+
+
+Network - X
+
+
+Bi-modal: 
+
+# EDGES -> 
+
+
+
+(people)
+
+(term)
+
+(bill)
+
+'''
