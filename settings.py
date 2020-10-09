@@ -9,7 +9,7 @@ REPS_STORE_PATH = os.path.join(OUTPUT_PATH, 'congress_reps')
 REPS_FILENAME = 'reps_{cid}.pickle'
 
 # bills paramteres
-DF_STORE_NAME = 'data_df_{cid}.pickle'
+DF_STORE_NAME = 'bills_df_{cid}.pickle'
 BILLS_STORE_PATH = os.path.join(OUTPUT_PATH, 'bills_df')
 BILLS_FIELD_NAMES = [
     'bill_number', 'ra_number', 'adopted_number', 
@@ -22,19 +22,27 @@ BILLS_FIELD_NAMES = [
     'senate_actions', 'conference_info','president_actions'
     ]
 
-
 URLS = {'17': "https://en.wikipedia.org/wiki/17th_Congress_of_the_Philippines"}
 CIDS = list(URLS.keys())
 
 # TABLE KEY WORDS
 REP_TABLE_KEYWORDS_MAP = {
-    "Province/City": "prov", 
-    "District": "dist",
-    "Representative.1": "rep_name",
-    "Party": "party",
-    "Term": "term",
-    "Bloc": "bloc",
+    'Province/City': 'prov', 
+    'District': 'dist',
+    'Representative.1': 'rep_name',
+    'Party': 'party',
+    'Term': 'term',
+    'Bloc': 'bloc',
 } 
+
+AUTHOR_TYPES_MAP = {
+    'principal': 'IS_AUTH_P',
+    'co_authors_journal': 'IS_CO_AUTH_J',
+    'co_authors_committee': 'IS_CO_AUTH_C', 
+    'co_authors_final': 'IS_CO_AUTH_F', 
+    'authors_withdraw': 'IS_CO_WD',
+    }
+
 
 # TODO: ADD SENATE
 # NOTES: Needs column name cleaning

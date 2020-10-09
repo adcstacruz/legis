@@ -4,12 +4,14 @@ import pandas as pd
 from settings import AUTHOR_KEYS
 from settings import SHORT_TITLE_KEYS
 from settings import BID_PATTERN
+from settings import AUTHOR_TYPES_MAP
 
 from authors import Author
 
 author_keys = AUTHOR_KEYS
 bid_pattern = BID_PATTERN
 short_title_keys = SHORT_TITLE_KEYS
+author_types = list(AUTHOR_TYPES_MAP.keys())
 
 ''' 
 TODO_LIST = [
@@ -20,12 +22,8 @@ TODO_LIST = [
     ]
 '''
 
-class BillList:
-    def __init__(self):
-        pass 
-
 class Bill:
-    def __init__(self, congress, bill_dict, cid):
+    def __init__(self, cid, bill_dict):
         self.bill_dict = bill_dict
         self.cid = cid
         self.bid = bill_dict['bill_number']
@@ -35,14 +33,7 @@ class Bill:
         
         self.date_filed = None
         self._process_date_filed('date_filed')
-       
-        author_types = [
-            'principal', 
-            'co_authors_journal',
-            'co_authors_committee', 
-            'co_authors_final', 
-            'authors_withdraw',
-            ]
+
         self.authors_list = list()
         self._process_authors_list(author_types)
 
@@ -55,7 +46,7 @@ class Bill:
         self.date_filed = pd.to_datetime(self.bill_dict[date_filed_field])
 
 
-    def _process_author(self, authors_list_raw, author_type):
+    def _process_authors(self, authors_list_raw, author_type):
         authors = list()
         for author_name_raw in authors_list_raw:
             author = Author(author_name_raw)
@@ -66,7 +57,7 @@ class Bill:
 
     def _process_authors_list(self, author_types):
         for author_type in author_types:
-            authors = self._process_author(self.bill_dict[author_type], author_type)
+            authors = self._process_authors(self.bill_dict[author_type], author_type)
             self.authors_list.extend(authors)
 
     

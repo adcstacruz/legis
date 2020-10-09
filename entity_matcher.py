@@ -1,7 +1,7 @@
 from settings import URLS
 
 import fuzzywuzzy
-from fetch_reps import fetch_reps
+from fetch_authors import fetch_reps
 
 urls = URLS
 

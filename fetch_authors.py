@@ -49,7 +49,6 @@ def fetch_reps(cid): # TODO: move to utils
     return reps_df
 
 
-
 def scrape_reps(url):
     # find the reps table
     candidate_tables = pd.read_html(url)
