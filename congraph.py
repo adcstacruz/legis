@@ -37,6 +37,7 @@ class Congraph:
             session.write_transaction(self._update_bill_relationships, bill)
             print(f'Updated relationships with node: {bill.bid}')
 
+
     @staticmethod
     def _create_bill(tx, bill):
         tx.run(
@@ -44,6 +45,7 @@ class Congraph:
             # "SET b.bid = $bid",
             bid = bill.bid
             )
+
 
     @staticmethod
     def _update_bill_relationships(tx, bill):
@@ -55,6 +57,8 @@ class Congraph:
                 name = name,
                 bid = bill.bid
                 )
+
+
 
 
 

@@ -2,33 +2,37 @@ from settings import CIDS
 
 cids = CIDS
 
-
 class Author:
+
+    masterlist_names = []
+
     def __init__(self, name):
         self.name = name
+        self.name_raw = name
         self.terms = {}
-
-    def set_name(self, matched_name, confidence):
-        self.name = matched_name
+        self.is_matched = False
 
 
-    def set_potential_names(self, matched_names, confidence):
-        pass
-
-    def add_term(self, term):
-        self.terms[term.cid] = term
-        
-
-class Term:
-    def __init__(self, cid, province, district, party, term, bloc):
+    def set_term(self, cid, province, district, party, term, bloc):
         self.cid = cid
         self.province = province
         self.district = district
         self.party = party 
         self.term = term
         self.bloc = bloc
-        self.bills = [] #TODO: might be just a tuple ('P', 'HBXXXX')
 
-    def add_bill():
-        pass
-        
+
+    def process_name_match():        
+        if confidence > match_th:
+            self.matched_name = (matched_name, confidence)
+            self.name = matched_name
+            self.is_matched = True
+
+
+    def set_author_type(self, author_type):
+        self.author_type = author_type
+
+
+    @classmethod
+    def update_masterlist_names(cls, new_master_list):
+        cls.masterlist_names = new_master_list

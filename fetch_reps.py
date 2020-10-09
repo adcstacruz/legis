@@ -5,22 +5,31 @@ import pandas as pd
 from bs4 import BeautifulSoup
 
 from settings import URLS
-
-
 from settings import REPS_STORE_PATH, REPS_FILENAME
-from settings import TABLE_KEYWORDS_MAP
-
+from settings import REP_TABLE_KEYWORDS_MAP
 
 urls = URLS
 reps_store_path = REPS_STORE_PATH
 reps_filename = REPS_FILENAME
 
-table_keywords_map = TABLE_KEYWORDS_MAP
-table_columns = list(table_keywords_map.keys())
+rep_table_map = REP_TABLE_KEYWORDS_MAP
+rep_table_kw = list(rep_table_map.keys())
 
 
+def clean_data(x): # TODO: move to utils
+    # remove reference texts
+    x = re.sub(r"\[.*?\]", "", x.strip())
+    # TODO: removal of indices (haven't checked other use cases)
+    return x
 
-def fetch_reps(cid):
+
+def get_common_fields_len(fields_1, fields_2): 
+    set_1 = set(fields_1) 
+    set_2 = set(fields_2) 
+    return len(list(set_1 & set_2))
+        
+
+def fetch_reps(cid): # TODO: move to utils
     reps_filepath = os.path.join(reps_store_path, reps_filename.format(cid=cid))
     
     if os.path.exists(reps_filepath):
@@ -37,48 +46,51 @@ def fetch_reps(cid):
         os.makedirs(reps_store_path)
 
     reps_df.to_pickle(reps_filepath)
-    reps_df.rename(columns=table_keywords_map, inplace=True)  
-
     return reps_df
 
 
 
 def scrape_reps(url):
-    html_content = requests.get(url).content
-    soup = BeautifulSoup(html_content, 'lxml')
-    candidate_tables = soup.find_all("table", {"class": "wikitable sortable"})
+    # find the reps table
+    candidate_tables = pd.read_html(url)
 
+    # find table in html
     table = None
-    best_score = 0
+    best_match_len = 0
+
     for c_table in candidate_tables:
-        c_table_ths = c_table.find_all('th')
-
-        temp_score = 0
-        for th in c_table_ths:
-            if th.text.replace('\n', ' ').lower().strip() in table_columns:
-                temp_score +=1
-
-        if best_score < temp_score:
+        cf_len = get_common_fields_len(
+            c_table.columns.tolist(),
+            rep_table_kw
+        )
+        print(cf_len)
+        if best_match_len < cf_len:
             table = c_table
-            best_score = temp_score
+            best_match_len = cf_len
 
-    table_rows = table.find_all('tr')
+    # rename and filter fields
+    table.rename(columns=rep_table_map, inplace=True)
+    table = table[list(rep_table_map.values())]
 
-    results = []
-    temp_province = None
-    for tr in table_rows[1:]:
-        row_elements = tr.find_all('td')
-
-        row = [re.sub(r"\[.*?\]", "", row_elem.text.strip()) for row_elem in row_elements if row_elem.text.strip()]
-
-        if len(row) == len(table_columns)-1:
-            row.insert(0, temp_province)
-        else:
-            temp_province = row[0]
-
-        if row:
-            results.append(row)
-            
-    return pd.DataFrame(results, columns=table_columns)
+    # remove reference texts 
+    table['rep_name'].apply(clean_data)
+    
+    return table
 
 
+def scrape_senators():
+    pass
+
+
+def scrape_partylist_mem():
+    pass
+
+
+if __name__ == "__main__":
+    reps_df = fetch_reps('17')
+
+    # for QA
+    import code
+    pd.set_option('display.max_rows', 500)
+    pd.set_option('display.max_columns', 500)
+    code.interact(local=locals())
