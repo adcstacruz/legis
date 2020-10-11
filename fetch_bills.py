@@ -1,3 +1,5 @@
+'''Congress Bill Fetcher.'''
+
 import os
 import time
 

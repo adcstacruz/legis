@@ -101,39 +101,7 @@ def legis(cid, congraph):
 
     del bills_df
 
-    print('DONE! YEY!')
-    # loop through all the bills in {cid} congress
-    # bills_path = input_path.format(cid=cid)
-    # file_names = os.listdir(bills_path)
-
-    # bill_list = []
-
-    # for file_name in file_names:
-    #     file_path = os.path.join(bills_path, file_name)
-
-    #     bill = Bill(cid, file_path)
-        
-    #     for raw_author in bill.raw_authors:  
-    #         mapped_author, score = process.extractOne(raw_author, authors_master_list)
-    #         # logic here
-    #         bill.add_mapped_author(mapped_author)
-    #         bill_list.append(bill)
-    
-
-
-
-    # for bill_obj in bill_list:
-    #     congraph.update_bill(bill_obj)
-        # congraph.update_author(rep_obj)     
-    # congress_list[cid].add_authore(reps)
-
-
-
-
-    # update knowledge graph
-    # for bill in bill_list:
-
-        # TODO: add the updates based on bills 
+    print('GRAPHINIFICATION DONE! YEY!')
 
 
 if __name__ == "__main__":
@@ -146,7 +114,3 @@ if __name__ == "__main__":
     legis('17', congraph)
     
     congraph.close()
-
-    # DELETE ALL NODES WITH RELATIONSHIPS
-    # match (n) -[r] -> () delete a, r
-    # match (n) delete n --> delete all nodes

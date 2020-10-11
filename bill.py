@@ -1,3 +1,5 @@
+'''Bill Data Model.'''
+
 import re 
 import pandas as pd
 
@@ -14,7 +16,7 @@ short_title_keys = SHORT_TITLE_KEYS
 author_types = list(AUTHOR_TYPES_MAP.keys())
 
 ''' 
-TODO_LIST = [
+PORP_TO_ADD_LIST = [
      'ra_number', 'adopted_number', 'concurrent_resolution', 
      'significance', 'nature', 'committee', 'date_urgent', 
      'second_reading', 'third_reading', 'senate_actions', 

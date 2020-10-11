@@ -1,3 +1,5 @@
+'''Congress Enitity Fetcher.'''
+
 import os
 import re
 import requests
@@ -30,6 +32,14 @@ def get_common_fields_len(fields_1, fields_2):
         
 
 def fetch_reps(cid): # TODO: move to utils
+    '''Representatives Fetcher.
+        
+        input: string representation of congress id
+        output: dataframe of representatives
+        others: stores the data if not present in the data directory
+    
+    '''
+
     reps_filepath = os.path.join(reps_store_path, reps_filename.format(cid=cid))
     
     if os.path.exists(reps_filepath):
@@ -50,6 +60,13 @@ def fetch_reps(cid): # TODO: move to utils
 
 
 def scrape_reps(url):
+    '''Representative Data Scraper.
+
+        input: string url
+        output: dataframe of representatives
+    
+    '''
+
     # find the reps table
     candidate_tables = pd.read_html(url)
 

@@ -1,3 +1,5 @@
+'''Author Data Model.'''
+
 from settings import CIDS
 
 from settings import AUTHOR_TYPES_MAP

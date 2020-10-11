@@ -1,3 +1,5 @@
+'''Knoweldge Graph Constructor.'''
+
 from neo4j import GraphDatabase
 
 
@@ -123,7 +125,6 @@ class Congraph:
             )
 
 
-
     def update_bill_auth_rels(self, bill):
         with self.driver.session() as session:
             for auth in bill.authors_list:
@@ -157,11 +158,6 @@ class Congraph:
             'RETURN a',
             name = auth.name #Jose Tejada
         )
-        # for match in match_result:
-        #     if match['name'] > 0:
-        #         return True
-        
-        # return False
         return bool(match_result.single())
 
 
@@ -170,34 +166,12 @@ class Congraph:
         tx.run(
             'MATCH (a:Author),(b:Bill) '
             'WHERE a.name = $name AND b.bid = $bid '
-            'MERGE (a)-[:IS_AUTH]->(b) ',
+            'MERGE (a)-[:{rel}]->(b) '.format(rel=auth.author_type),
             name = auth.name,
             bid = bill.bid,
-            #rel = author.author_type,
             )
 
-
-
-
-
-    # def _update_author(tx, author):
-    #     pass
-
-
-    # def print_greeting(self, message):
-    #     with self.driver.session() as session:
-    #         greeting = session.write_transaction(self._create_and_return_greeting, message)
-    #         print(greeting)
-
-
-    # @staticmethod
-    # def _create_and_return_greeting(tx, message):
-    #     result = tx.run("CREATE (a:Greeting) "
-    #                     "SET a.message = $message "
-    #                     "RETURN a.message + ', from node ' + id(a)", message=message)
-    #     return result.single()[0]
-
-
+S
 if __name__ == "__main__":
     greeter = Congraph("bolt://localhost:7687", "neo4j", "test")
     greeter.print_greeting("hello, world")
