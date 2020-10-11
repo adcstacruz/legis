@@ -22,7 +22,7 @@ def clean_data(x): # TODO: move to utils
     # remove reference texts
     x = re.sub(r"\[.*?\]", "", x.strip())
     # TODO: removal of indices (haven't checked other use cases)
-    return x
+    return x           
 
 
 def get_common_fields_len(fields_1, fields_2): 

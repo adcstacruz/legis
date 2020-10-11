@@ -49,7 +49,7 @@ class Congraph:
     @staticmethod
     def _create_author_node(tx, author):
         tx.run(
-            "MERGE (a:Author {name:$name})",
+            'MERGE (a:Author {name:$name})',
             name = author.name
             )
 
@@ -76,7 +76,7 @@ class Congraph:
     @staticmethod
     def _create_province_node(tx, prov_name):
         tx.run(
-            "MERGE (p:Province {name:$name})",
+            'MERGE (p:Province {name:$name})',
             name = prov_name
             )
     
@@ -171,7 +171,7 @@ class Congraph:
             bid = bill.bid,
             )
 
-S
+
 if __name__ == "__main__":
     greeter = Congraph("bolt://localhost:7687", "neo4j", "test")
     greeter.print_greeting("hello, world")

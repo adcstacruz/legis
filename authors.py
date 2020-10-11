@@ -16,7 +16,6 @@ class Author:
         self.name = name
         self.name_raw = name
         self.name_matched = None
-        self.terms = {}
         self.is_matched = False
 
 
